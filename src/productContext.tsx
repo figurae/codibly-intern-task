@@ -16,5 +16,5 @@ export interface ApiInterface {
 	totalPages: number;
 }
 
-export const apiUrl = 'https://reqres.in/api/products';
+export const apiUrl = 'https://reqres.in/api/products?';
 export const ProductContext = createContext<ApiInterface | null>(null);
