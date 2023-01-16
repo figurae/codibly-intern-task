@@ -5,6 +5,7 @@ import Pagination from './components/Pagination';
 import Table from './components/Table';
 import { ProductContext, apiUrl, ApiInterface } from './productContext';
 import humps from 'humps';
+import { CssBaseline } from '@mui/material';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -28,11 +29,14 @@ function App() {
 	}, []);
 
 	return (
-		<ProductContext.Provider value={productContext}>
-			<NumberInput />
-			<Table />
-			<Pagination />
-		</ProductContext.Provider>
+		<>
+			<CssBaseline />
+			<ProductContext.Provider value={productContext}>
+				<NumberInput />
+				<Table />
+				<Pagination />
+			</ProductContext.Provider>
+		</>
 	);
 }
 
