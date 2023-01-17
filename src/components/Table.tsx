@@ -8,11 +8,14 @@ import {
 	TableBody,
 	TableCell,
 	tableCellClasses,
+	TableContainer,
 	TableHead,
 	TableRow,
 } from '@mui/material';
 import { hexStringToHslArray } from '../helpers/color-conversion';
 import { clamp } from '../helpers/math';
+
+const TABLE_HEIGHT = 364;
 
 function Table() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,55 +38,57 @@ function Table() {
 					)}
 				/>
 			</Modal>
-			<MuiTable
-				sx={{
-					[`& .${tableCellClasses.root}`]: {
-						borderBottom: 'none',
-					},
-				}}
-			>
-				<TableHead>
-					<TableRow>
-						<TableCell>Id</TableCell>
-						<TableCell>Name</TableCell>
-						<TableCell>Year</TableCell>
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{productContext?.data.map((item) => {
-						const hslArray = hexStringToHslArray(item.color);
+			<TableContainer sx={{ height: TABLE_HEIGHT }}>
+				<MuiTable
+					sx={{
+						[`& .${tableCellClasses.root}`]: {
+							borderBottom: 'none',
+						},
+					}}
+				>
+					<TableHead>
+						<TableRow>
+							<TableCell>Id</TableCell>
+							<TableCell>Name</TableCell>
+							<TableCell>Year</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{productContext?.data.map((item) => {
+							const hslArray = hexStringToHslArray(item.color);
 
-						const offset = 10;
-						const newH = clamp(hslArray[0] - offset, 0, 360);
-						const newS = clamp(hslArray[1] - offset * 2, 0, 100);
-						const newL = clamp(hslArray[2] + offset * 3, 0, 100);
+							const offset = 10;
+							const newH = clamp(hslArray[0] - offset, 0, 360);
+							const newS = clamp(hslArray[1] - offset * 2, 0, 100);
+							const newL = clamp(hslArray[2] + offset * 3, 0, 100);
 
-						const gradientNode = `hsl(${newH}, ${newS}%, ${newL}%)`;
+							const gradientNode = `hsl(${newH}, ${newS}%, ${newL}%)`;
 
-						return (
-							<TableRow
-								key={item.id}
-								sx={{
-									backgroundImage: `linear-gradient(to right, ${gradientNode}, ${item.color})`,
-									textShadow: '0.5px 0.5px 2px white',
-									cursor: 'pointer',
-								}}
-								onClick={() => openModal(item.id)}
-							>
-								<TableCell>{item.id}</TableCell>
-								<TableCell
+							return (
+								<TableRow
+									key={item.id}
 									sx={{
-										textTransform: 'capitalize',
+										backgroundImage: `linear-gradient(to right, ${gradientNode}, ${item.color})`,
+										textShadow: '0.5px 0.5px 2px white',
+										cursor: 'pointer',
 									}}
+									onClick={() => openModal(item.id)}
 								>
-									{item.name}
-								</TableCell>
-								<TableCell>{item.year}</TableCell>
-							</TableRow>
-						);
-					})}
-				</TableBody>
-			</MuiTable>
+									<TableCell>{item.id}</TableCell>
+									<TableCell
+										sx={{
+											textTransform: 'capitalize',
+										}}
+									>
+										{item.name}
+									</TableCell>
+									<TableCell>{item.year}</TableCell>
+								</TableRow>
+							);
+						})}
+					</TableBody>
+				</MuiTable>
+			</TableContainer>
 		</>
 	);
 }
