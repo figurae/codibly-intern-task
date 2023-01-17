@@ -15,8 +15,16 @@ function NumberInput(props: FilterProps) {
 				<input
 					id='filter-by-id'
 					type='text'
+					maxLength={2}
 					value={idToFilter}
-					onChange={(e) => setIdToFilter(e.target.value)}
+					onChange={(e) => {
+						const numbersOnlyRegex = /^[0-9\b]+$/;
+						const value = e.target.value;
+
+						if (value === '' || numbersOnlyRegex.test(value)) {
+							setIdToFilter(value);
+						}
+					}}
 				/>
 			</form>
 		</div>
