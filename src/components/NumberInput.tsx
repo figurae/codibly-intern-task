@@ -1,3 +1,4 @@
+import { Button, Stack, TextField } from '@mui/material';
 import './NumberInput.css';
 
 interface FilterProps {
@@ -9,25 +10,27 @@ function NumberInput(props: FilterProps) {
 	const { idToFilter, setIdToFilter } = props;
 
 	return (
-		<div className='number-input'>
-			<form className='number-input-field' onSubmit={(e) => e.preventDefault()}>
-				<label htmlFor='filter-by-id'>Filter by id:</label>
-				<input
-					id='filter-by-id'
-					type='text'
-					maxLength={2}
-					value={idToFilter}
-					onChange={(e) => {
-						const numbersOnlyRegex = /^[0-9\b]+$/;
-						const value = e.target.value;
+		<Stack direction='row' spacing={2}>
+			<TextField
+				id='filter-by-id'
+				type='text'
+				inputProps={{ maxLength: 2 }}
+				value={idToFilter}
+				label='Filter by ID'
+				autoFocus={true}
+				onChange={(e) => {
+					const numbersOnlyRegex = /^[0-9\b]+$/;
+					const value = e.target.value;
 
-						if (value === '' || numbersOnlyRegex.test(value)) {
-							setIdToFilter(value);
-						}
-					}}
-				/>
-			</form>
-		</div>
+					if (value === '' || numbersOnlyRegex.test(value)) {
+						setIdToFilter(value);
+					}
+				}}
+			/>
+			<Button variant='contained' onClick={() => setIdToFilter('')}>
+				Clear
+			</Button>
+		</Stack>
 	);
 }
 
