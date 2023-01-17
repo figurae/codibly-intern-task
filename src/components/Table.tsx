@@ -5,22 +5,6 @@ import './Table.css';
 function Table() {
 	const productContext = useContext(ProductContext);
 
-	const itemNodes = [];
-
-	if (productContext !== null) {
-		for (const item of productContext.data) {
-			const itemNode = (
-				<tr key={item.id} style={{ backgroundColor: item.color }}>
-					<td>{item.id}</td>
-					<td>{item.name}</td>
-					<td>{item.year}</td>
-				</tr>
-			);
-
-			itemNodes.push(itemNode);
-		}
-	}
-
 	return (
 		<table>
 			<thead>
@@ -30,7 +14,17 @@ function Table() {
 					<th>year</th>
 				</tr>
 			</thead>
-			<tbody>{itemNodes}</tbody>
+			<tbody>
+				{productContext?.data.map((item) => {
+					return (
+						<tr key={item.id} style={{ backgroundColor: item.color }}>
+							<td>{item.id}</td>
+							<td>{item.name}</td>
+							<td>{item.year}</td>
+						</tr>
+					);
+				})}
+			</tbody>
 		</table>
 	);
 }

@@ -12,16 +12,28 @@ function App() {
 	);
 
 	const fetchFromApiToContext = useCallback(
-		async (page: string, itemsPerPage: string) => {
-			const response = await fetch(
-				apiUrl +
-					new URLSearchParams({
-						per_page: itemsPerPage,
-						page,
-					})
-			);
+		async (page: string, itemsPerPage: string, idToFilter: string) => {
+			const response =
+				idToFilter === ''
+					? await fetch(
+							apiUrl +
+								new URLSearchParams({
+									per_page: itemsPerPage,
+									page,
+								})
+					  )
+					: await fetch(
+							apiUrl +
+								new URLSearchParams({
+									id: idToFilter,
+								})
+					  );
 			const jsonData = await response.json();
 			const camelizedJsonData = humps.camelizeKeys(jsonData) as ApiInterface;
+
+			if (!Array.isArray(camelizedJsonData.data)) {
+				camelizedJsonData.data = [camelizedJsonData.data];
+			}
 
 			setProductContext(camelizedJsonData);
 		},

@@ -11,11 +11,12 @@ interface PaginationProps {
 }
 
 function Pagination(props: PaginationProps) {
+	const { currentPage } = props;
 	const productContext = useContext(ProductContext);
 
 	return (
 		<MuiPagination
-			page={props.currentPage}
+			page={currentPage}
 			count={productContext?.totalPages}
 			color='primary'
 			renderItem={(item) => (
