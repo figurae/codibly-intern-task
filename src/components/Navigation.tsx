@@ -5,6 +5,7 @@ import './Navigation.css';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -36,7 +37,7 @@ function Navigation(props: NavigationProps) {
 	}, [idToFilter, currentPage, fetchFromApiToContext]);
 
 	return (
-		<>
+		<Stack alignItems={'center'}>
 			<NumberInput idToFilter={idToFilter} setIdToFilter={setIdToFilter} />
 
 			{errorMessage !== null ? (
@@ -46,7 +47,7 @@ function Navigation(props: NavigationProps) {
 			)}
 
 			<Pagination currentPage={currentPage} />
-		</>
+		</Stack>
 	);
 }
 
