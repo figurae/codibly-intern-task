@@ -37,7 +37,7 @@ function Navigation(props: NavigationProps) {
 	}, [idToFilter, currentPage, fetchFromApiToContext]);
 
 	return (
-		<Stack alignItems={'center'}>
+		<Stack alignItems={'center'} paddingTop={2} spacing={2}>
 			<NumberInput idToFilter={idToFilter} setIdToFilter={setIdToFilter} />
 
 			{errorMessage !== null ? (
