@@ -4,19 +4,21 @@ import Pagination from './Pagination';
 import './Navigation.css';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import Alert from '@mui/material/Alert';
 
 const ITEMS_PER_PAGE = 5;
 
-interface FetchProps {
+interface NavigationProps {
 	fetchFromApiToContext: (
 		page: string,
 		itemsPerPage: string,
 		idToFilter: string
 	) => void;
+	errorMessage: string | null;
 }
 
-function Navigation(props: FetchProps) {
-	const { fetchFromApiToContext } = props;
+function Navigation(props: NavigationProps) {
+	const { fetchFromApiToContext, errorMessage } = props;
 	const [idToFilter, setIdToFilter] = useState('');
 
 	const location = useLocation();
@@ -34,7 +36,13 @@ function Navigation(props: FetchProps) {
 	return (
 		<>
 			<NumberInput idToFilter={idToFilter} setIdToFilter={setIdToFilter} />
-			<Table />
+
+			{errorMessage !== null ? (
+				<Alert severity='error'>{errorMessage}</Alert>
+			) : (
+				<Table />
+			)}
+
 			<Pagination currentPage={currentPage} />
 		</>
 	);

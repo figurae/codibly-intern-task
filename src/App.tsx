@@ -10,32 +10,46 @@ function App() {
 	const [productContext, setProductContext] = useState<ApiInterface | null>(
 		null
 	);
+	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	const fetchFromApiToContext = useCallback(
 		async (page: string, itemsPerPage: string, idToFilter: string) => {
-			const response =
+			const searchParams =
 				idToFilter === ''
-					? await fetch(
-							apiUrl +
-								new URLSearchParams({
-									per_page: itemsPerPage,
-									page,
-								})
-					  )
-					: await fetch(
-							apiUrl +
-								new URLSearchParams({
-									id: idToFilter,
-								})
-					  );
-			const jsonData = await response.json();
-			const camelizedJsonData = humps.camelizeKeys(jsonData) as ApiInterface;
+					? new URLSearchParams({
+							per_page: itemsPerPage,
+							page,
+					  })
+					: new URLSearchParams({ id: idToFilter });
 
-			if (!Array.isArray(camelizedJsonData.data)) {
-				camelizedJsonData.data = [camelizedJsonData.data];
+			try {
+				const response = await fetch(apiUrl + searchParams);
+
+				if (response.status >= 400) {
+					throw new Error(
+						`Error ${response.status} received while fetching data!`
+					);
+				}
+
+				const jsonData = await response.json();
+				const camelizedJsonData = humps.camelizeKeys(jsonData) as ApiInterface;
+
+				if (!Array.isArray(camelizedJsonData.data)) {
+					camelizedJsonData.data = [camelizedJsonData.data];
+				}
+
+				setProductContext(camelizedJsonData);
+
+				setErrorMessage(null);
+			} catch (err) {
+				let message = 'Unexpected error!';
+
+				if (err instanceof Error) {
+					message = err.message;
+				}
+
+				setErrorMessage(message);
 			}
-
-			setProductContext(camelizedJsonData);
 		},
 		[]
 	);
@@ -49,7 +63,10 @@ function App() {
 						<Route
 							path='*'
 							element={
-								<Navigation fetchFromApiToContext={fetchFromApiToContext} />
+								<Navigation
+									fetchFromApiToContext={fetchFromApiToContext}
+									errorMessage={errorMessage}
+								/>
 							}
 						/>
 					</Routes>
