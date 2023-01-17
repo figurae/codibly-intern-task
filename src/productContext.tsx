@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-interface ProductData {
+export interface ProductData {
 	id: number;
 	name: string;
 	year: number;
