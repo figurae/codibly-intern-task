@@ -1,40 +1,48 @@
-import { useEffect, useState } from 'react';
-import './App.css';
-import NumberInput from './components/NumberInput';
-import Pagination from './components/Pagination';
-import Table from './components/Table';
+import { useCallback, useState } from 'react';
 import { ProductContext, apiUrl, ApiInterface } from './productContext';
-import humps from 'humps';
+import './App.css';
 import { CssBaseline } from '@mui/material';
-
-const ITEMS_PER_PAGE = 5;
+import humps from 'humps';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Navigation from './components/Navigation';
 
 function App() {
 	const [productContext, setProductContext] = useState<ApiInterface | null>(
 		null
 	);
 
-	const fetchFromApiToContext = async () => {
-		const response = await fetch(
-			apiUrl + new URLSearchParams({ per_page: ITEMS_PER_PAGE.toString() })
-		);
-		const jsonData = await response.json();
-		const camelizedJsonData = humps.camelizeKeys(jsonData) as ApiInterface;
+	const fetchFromApiToContext = useCallback(
+		async (page: string, itemsPerPage: string) => {
+			const response = await fetch(
+				apiUrl +
+					new URLSearchParams({
+						per_page: itemsPerPage,
+						page,
+					})
+			);
+			const jsonData = await response.json();
+			const camelizedJsonData = humps.camelizeKeys(jsonData) as ApiInterface;
 
-		setProductContext(camelizedJsonData);
-	};
-
-	useEffect(() => {
-		fetchFromApiToContext();
-	}, []);
+			console.log(`object`);
+			setProductContext(camelizedJsonData);
+		},
+		[]
+	);
 
 	return (
 		<>
 			<CssBaseline />
 			<ProductContext.Provider value={productContext}>
-				<NumberInput />
-				<Table />
-				<Pagination />
+				<BrowserRouter>
+					<Routes>
+						<Route
+							path='*'
+							element={
+								<Navigation fetchFromApiToContext={fetchFromApiToContext} />
+							}
+						/>
+					</Routes>
+				</BrowserRouter>
 			</ProductContext.Provider>
 		</>
 	);
