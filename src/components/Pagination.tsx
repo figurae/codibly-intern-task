@@ -1,6 +1,6 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { ProductContext } from '../productContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Pagination.css';
 import MuiPagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
@@ -13,6 +13,15 @@ interface PaginationProps {
 function Pagination(props: PaginationProps) {
 	const { currentPage } = props;
 	const productContext = useContext(ProductContext);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (productContext) {
+			if (currentPage < 1 || currentPage > productContext.totalPages) {
+				navigate('/');
+			}
+		}
+	});
 
 	return (
 		<MuiPagination

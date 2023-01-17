@@ -23,7 +23,8 @@ function Navigation(props: NavigationProps) {
 
 	const location = useLocation();
 	const query = new URLSearchParams(location.search);
-	const currentPage = Number(query.get('page') || '1');
+	const queriedPage = Number(query.get('page'));
+	const currentPage = isNaN(queriedPage) || queriedPage === 0 ? 1 : queriedPage;
 
 	useEffect(() => {
 		fetchFromApiToContext(
