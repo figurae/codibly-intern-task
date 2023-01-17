@@ -66,6 +66,7 @@ function Table() {
 								sx={{
 									backgroundImage: `linear-gradient(to right, ${gradientNode}, ${item.color})`,
 									textShadow: '0.5px 0.5px 2px white',
+									cursor: 'pointer',
 								}}
 								onClick={() => openModal(item.id)}
 							>
