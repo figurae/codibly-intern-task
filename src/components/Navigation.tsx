@@ -28,6 +28,8 @@ function Navigation(props: NavigationProps) {
 	const queriedPage = Number(query.get('page'));
 	const currentPage = isNaN(queriedPage) || queriedPage === 0 ? 1 : queriedPage;
 
+	const queriedId = query.get('id');
+
 	useEffect(() => {
 		fetchFromApiToContext(
 			currentPage.toString(),
@@ -35,6 +37,21 @@ function Navigation(props: NavigationProps) {
 			idToFilter.toString()
 		);
 	}, [idToFilter, currentPage, fetchFromApiToContext]);
+
+	useEffect(() => {
+		if (queriedId !== null && !isNaN(Number(queriedId))) {
+			setIdToFilter(queriedId);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	if (idToFilter !== '') {
+		window.history.pushState({}, '', `/?id=${idToFilter}`);
+	} else if (idToFilter === '' && currentPage === 1) {
+		window.history.pushState({}, '', '/');
+	} else {
+		window.history.pushState({}, '', `/page=${currentPage}`);
+	}
 
 	return (
 		<Stack alignItems={'center'} paddingTop={2} spacing={2}>
