@@ -3,6 +3,16 @@ import { ProductContext } from '../productContext';
 import ModalBox from './ModalBox';
 import Modal from '@mui/material/Modal';
 import './Table.css';
+import {
+	Table as MuiTable,
+	TableBody,
+	TableCell,
+	tableCellClasses,
+	TableHead,
+	TableRow,
+} from '@mui/material';
+import { hexStringToHslArray } from '../helpers/color-conversion';
+import { clamp } from '../helpers/math';
 
 function Table() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,30 +35,54 @@ function Table() {
 					)}
 				/>
 			</Modal>
-			<table>
-				<thead>
-					<tr>
-						<th>id</th>
-						<th>name</th>
-						<th>year</th>
-					</tr>
-				</thead>
-				<tbody>
+			<MuiTable
+				sx={{
+					[`& .${tableCellClasses.root}`]: {
+						borderBottom: 'none',
+					},
+				}}
+			>
+				<TableHead>
+					<TableRow>
+						<TableCell>Id</TableCell>
+						<TableCell>Name</TableCell>
+						<TableCell>Year</TableCell>
+					</TableRow>
+				</TableHead>
+				<TableBody>
 					{productContext?.data.map((item) => {
+						const hslArray = hexStringToHslArray(item.color);
+
+						const offset = 10;
+						const newH = clamp(hslArray[0] - offset, 0, 360);
+						const newS = clamp(hslArray[1] - offset * 2, 0, 100);
+						const newL = clamp(hslArray[2] + offset * 3, 0, 100);
+
+						const gradientNode = `hsl(${newH}, ${newS}%, ${newL}%)`;
+
 						return (
-							<tr
+							<TableRow
 								key={item.id}
-								style={{ backgroundColor: item.color }}
+								sx={{
+									backgroundImage: `linear-gradient(to right, ${gradientNode}, ${item.color})`,
+									textShadow: '0.5px 0.5px 2px white',
+								}}
 								onClick={() => openModal(item.id)}
 							>
-								<td>{item.id}</td>
-								<td>{item.name}</td>
-								<td>{item.year}</td>
-							</tr>
+								<TableCell>{item.id}</TableCell>
+								<TableCell
+									sx={{
+										textTransform: 'capitalize',
+									}}
+								>
+									{item.name}
+								</TableCell>
+								<TableCell>{item.year}</TableCell>
+							</TableRow>
 						);
 					})}
-				</tbody>
-			</table>
+				</TableBody>
+			</MuiTable>
 		</>
 	);
 }

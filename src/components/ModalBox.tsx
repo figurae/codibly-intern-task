@@ -47,7 +47,9 @@ const ModalBox = forwardRef((props: ModalProps, ref) => {
 						<TableCell variant='head' sx={rightBorderStyle}>
 							Name
 						</TableCell>
-						<TableCell>{product?.name}</TableCell>
+						<TableCell sx={{ textTransform: 'capitalize' }}>
+							{product?.name}
+						</TableCell>
 					</TableRow>
 					<TableRow>
 						<TableCell variant='head' sx={rightBorderStyle}>
