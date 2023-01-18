@@ -2,7 +2,6 @@ import { useCallback, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import { ProductContext, apiUrl, ApiInterface } from './product-context';
-import './App.css';
 import { CssBaseline } from '@mui/material';
 import humps from 'humps';
 

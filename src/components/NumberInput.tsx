@@ -1,5 +1,4 @@
 import { Button, Stack, TextField } from '@mui/material';
-import './NumberInput.css';
 
 interface FilterProps {
 	idToFilter: string;

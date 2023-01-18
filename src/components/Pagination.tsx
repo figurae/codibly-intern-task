@@ -1,7 +1,6 @@
 import { useContext, useEffect } from 'react';
-import { ProductContext } from '../product-context';
 import { Link, useNavigate } from 'react-router-dom';
-import './Pagination.css';
+import { ProductContext } from '../product-context';
 import MuiPagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';

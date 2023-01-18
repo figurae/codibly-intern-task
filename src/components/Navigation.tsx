@@ -1,9 +1,8 @@
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import NumberInput from './NumberInput';
 import Table from './Table';
 import Pagination from './Pagination';
-import './Navigation.css';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
