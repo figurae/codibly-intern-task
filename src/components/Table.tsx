@@ -14,12 +14,14 @@ import {
 import { hexStringToHslArray } from '../helpers/color-conversion';
 import { clamp } from '../helpers/math';
 
+// this could be derived programmatically, but it doesn't seem necessary for such a small project
 const TABLE_HEIGHT = 364;
 
 function Table() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalItemId, setModalItemId] = useState(0);
 
+	// suppress browser back button in order to make it close the modal window
 	const replaceBack = (callback: () => void) => {
 		window.history.pushState(null, '', window.location.href);
 		window.onpopstate = () => {
@@ -56,6 +58,7 @@ function Table() {
 			<TableContainer sx={{ height: TABLE_HEIGHT }}>
 				<MuiTable
 					sx={{
+						// this removes all horizontal lines
 						[`& .${tableCellClasses.root}`]: {
 							borderBottom: 'none',
 						},

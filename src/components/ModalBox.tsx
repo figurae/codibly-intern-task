@@ -14,6 +14,7 @@ interface ModalProps {
 	product: ProductData | undefined;
 }
 
+// ref is required by parent Modal
 const ModalBox = forwardRef((props: ModalProps, ref) => {
 	const { product } = props;
 
@@ -31,6 +32,7 @@ const ModalBox = forwardRef((props: ModalProps, ref) => {
 		>
 			<Table
 				sx={{
+					// this removes all horizontal lines
 					[`& .${tableCellClasses.root}`]: {
 						borderBottom: 'none',
 					},

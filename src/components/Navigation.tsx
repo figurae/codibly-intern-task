@@ -38,6 +38,7 @@ function Navigation(props: NavigationProps) {
 		);
 	}, [idToFilter, currentPage, fetchFromApiToContext]);
 
+	// HACK: this seems a bit hacky, but at least it works.
 	useEffect(() => {
 		if (queriedId !== null && !isNaN(Number(queriedId))) {
 			setIdToFilter(queriedId);

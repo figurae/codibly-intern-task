@@ -38,6 +38,7 @@ function App() {
 				const jsonData = await response.json();
 				const camelizedJsonData = humps.camelizeKeys(jsonData) as ApiInterface;
 
+				// when fetching by id, data is just a single item, but components require an array
 				if (!Array.isArray(camelizedJsonData.data)) {
 					camelizedJsonData.data = [camelizedJsonData.data];
 				}
@@ -48,6 +49,8 @@ function App() {
 			} catch (err) {
 				let message = 'Unexpected error!';
 
+				// err is unknown by default in TypeScript, which is why
+				// we have to check its type first to get to the message
 				if (err instanceof Error) {
 					message = err.message;
 				}

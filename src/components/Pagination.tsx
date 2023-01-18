@@ -14,6 +14,7 @@ function Pagination(props: PaginationProps) {
 	const productContext = useContext(ProductContext);
 	const navigate = useNavigate();
 
+	// handle users providing incorrect page number via url
 	useEffect(() => {
 		if (productContext) {
 			if (currentPage < 1 || currentPage > productContext.totalPages) {
