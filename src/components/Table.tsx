@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { ProductContext } from '../productContext';
+import { ProductContext } from '../product-context';
 import ModalBox from './ModalBox';
 import Modal from '@mui/material/Modal';
 import './Table.css';

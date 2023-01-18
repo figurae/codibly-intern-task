@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { ProductContext } from '../productContext';
+import { ProductContext } from '../product-context';
 import { Link, useNavigate } from 'react-router-dom';
 import './Pagination.css';
 import MuiPagination from '@mui/material/Pagination';

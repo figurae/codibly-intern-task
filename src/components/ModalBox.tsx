@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { ProductData } from '../productContext';
+import { ProductData } from '../product-context';
 import Box from '@mui/material/Box';
 import {
 	Table,
