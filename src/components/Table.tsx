@@ -21,11 +21,27 @@ function Table() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalItemId, setModalItemId] = useState(0);
 
+	const replaceBack = (callback: () => void) => {
+		window.history.pushState(null, '', window.location.href);
+		window.onpopstate = () => {
+			window.history.pushState(null, '', window.location.href);
+			callback();
+		};
+	};
+	const resetBack = () => {
+		window.onpopstate = null;
+		window.history.back();
+	};
+
+	const closeModal = () => {
+		setIsModalOpen(false);
+		resetBack();
+	};
 	const openModal = (id: number) => {
 		setIsModalOpen(true);
 		setModalItemId(id);
+		replaceBack(closeModal);
 	};
-	const closeModal = () => setIsModalOpen(false);
 
 	const productContext = useContext(ProductContext);
 
