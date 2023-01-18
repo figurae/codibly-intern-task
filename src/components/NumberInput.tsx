@@ -27,7 +27,12 @@ function NumberInput(props: FilterProps) {
 					}
 				}}
 			/>
-			<Button variant='contained' onClick={() => setIdToFilter('')}>
+			<Button
+				variant='contained'
+				onClick={() => {
+					setIdToFilter('');
+				}}
+			>
 				Clear
 			</Button>
 		</Stack>
