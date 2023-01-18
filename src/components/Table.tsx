@@ -48,9 +48,9 @@ function Table() {
 				>
 					<TableHead>
 						<TableRow>
-							<TableCell>Id</TableCell>
+							<TableCell sx={{ width: 100 }}>Id</TableCell>
 							<TableCell>Name</TableCell>
-							<TableCell>Year</TableCell>
+							<TableCell sx={{ width: 100 }}>Year</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
