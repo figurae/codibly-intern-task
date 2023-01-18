@@ -24,6 +24,7 @@
 	},
 	"devDependencies": {
 		"@types/humps": "^2.0.2",
+		"@types/react-test-renderer": "^18.0.0",
 		"react-scripts": "5.0.1",
 		"react-test-renderer": "^18.2.0"
 	},
