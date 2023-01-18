@@ -25,9 +25,14 @@ function App() {
 			try {
 				const response = await fetch(apiUrl + searchParams);
 
-				if (response.status >= 400) {
+				if (response.status >= 400 && response.status < 500) {
 					throw new Error(
-						`Error ${response.status} received while fetching data!`
+						`Id not found. Please provide a correct id (1 to 12).`
+					);
+				}
+				if (response.status >= 500) {
+					throw new Error(
+						`Error while connecting to the server, please try again later.`
 					);
 				}
 
